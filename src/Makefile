@@ -9,7 +9,7 @@ LIB_SRCS := s21_mem.c s21_str_basic.c s21_str_search.c s21_error.c s21_sprintf.c
 LIB_OBJS := $(LIB_SRCS:.c=.o)
 HDRS := s21_string.h s21_sprintf.h s21_error.h
 
-TEST_SRCS := tests/test_part1.c tests/test_sprintf.c
+TEST_SRCS := tests/main_test.c tests/test_part1.c tests/test_sprintf.c
 TEST_OBJS := $(TEST_SRCS:.c=.o)
 
 OS := $(shell uname -s)
@@ -48,7 +48,7 @@ format:
 	clang-format -style=Google -n $(LIB_SRCS) $(HDRS) $(TEST_SRCS)
 
 cppcheck:
-	cppcheck -enable=all --suppress=missingIncludeSystem $(LIB_SRCS) $(HDRS)
+	cppcheck --enable=all --suppress=missingIncludeSystem $(LIB_SRCS) $(HDRS)
 
 leaks: test
 ifeq ($(OS), Darwin)
@@ -59,6 +59,6 @@ endif
 
 clean: 
 	rm -f $(LIB_OBJS) $(TEST_OBJS) $(TARGET) $(TEST_TARGET)
-	rm -f *.gcno *.gcda *.gcov report report.info
+	rm -rf *.gcno *.gcda *.gcov report report.info
 
 rebuild: clean all
